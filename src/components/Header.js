@@ -1,116 +1,55 @@
-import React,{useState} from "react";
-import styled from "styled-components";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faXmark} from '@fortawesome/free-solid-svg-icons'
-import {selectCars} from "../features/car/carSlice";
-import { useSelector } from "react-redux";
+import React from 'react';
+import About from '../home/About';
+import Login from '../home/Login';
 
+import { NavLink, Routes, Route, Link } from 'react-router-dom';
 function Header() {
-
-  const [burgerStatus,setBurgerStatus]=useState(false);
-  const cars=useSelector(selectCars)
   return (
-    <Container>
-      <a>
-        <img src="/images/logo.svg" alt="" />
-      </a>
+    <>
 
-      <Menu>
-        {cars &&cars.map((car,index)=>(
-        <a key={index} href="#">{car}</a>))}
-      </Menu>
-      <RightMenu style={{margin:"25px"}}>
-        <a href="#">Shop</a>
-        <a href="#">Tesla Account</a>
-        <FontAwesomeIcon icon={faBars} onClick={()=>setBurgerStatus(true)} style={{cursor:'pointer'}}/>      
-      </RightMenu>
-      <BurgerNav show={burgerStatus}>
-      <CloseWrapper>
-      <FontAwesomeIcon icon={faXmark} onClick={()=>setBurgerStatus(false)} style={{fontWeight:"600",cursor:'pointer'}} />
-      </CloseWrapper>
-      {cars &&cars.map((car,index)=>(
-        <li key={index} ><a href="#">{car}</a></li>))}
-        <li><a href="#">Existing Inventory</a></li>
-        <li><a href="#">Used Inventory</a></li>
-        <li><a href="#">Trade-in</a></li>
-        <li><a href="#">Cybertruck</a></li>
-        <li><a href="#">Roadster</a></li>
-      </BurgerNav>
-    </Container>
-  );
+      <div className='display-1'>Header</div>
+
+      {/* links to routes */}
+      <nav className="navbar navbar-expand-lg navbar-expand-md navbar-light bg-white py-3 shadow-sm">
+        <div className="container">
+          <NavLink className="navbar-brand fw-bold fs-4" to="#">Easy Shop</NavLink>
+          <div className='dropdown'>
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle docs navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
+                <li className="nav-item">
+                  <NavLink className="nav-link active" aria-current="page" to="">Home</NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link active" aria-current="page" to="products">Products</NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link active" aria-current="page" to="contact us">Contact us</NavLink>
+                </li>
+              </ul>
+              <div className="buttons">
+                {/* Login button */}
+                <NavLink to="/about" className="btn btn-outline-dark ">
+                  <i className="me-1"></i>Register</NavLink>
+                {/* Register button */}
+                <NavLink to="/login" className="btn btn-outline-dark ms-2 navlink active">
+                  <i className="me-1"></i>Login</NavLink>
+                {/* Cart button */}
+                <NavLink to="/cart " className="btn btn-outline-dark ms-2 navlink active">
+                  <i className="me-1"></i>Cart</NavLink>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    <About/>
+    <Login/>
+    </>
+  )
+
 }
 
+
 export default Header;
-
-const Container = styled.div`
-  min-height: 60px;
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content:space-between;
-  paddding: 0 20px;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index:1;
-`;
-
-const Menu = styled.div`
-  min-height: 60px;
-  display: flex;
-  align-items: center;
-  flex: 1;
-  justify-content: center;
-  a {
-    text-transform: uppercase;
-    font-weight: 700;
-    padding: 0 10px;
-    flex-wrap: nowrap;
-  }
-  @media(max-width:768px){
-    display:none;
-  }
-`;
-const RightMenu = styled.div`
-  align-items: center;
-  display: flex;
-  a{
-    text-transform: uppercase;
-    font-weight: 700;
-    margin-right: 10px;
-  }
-`;
-
-const BurgerNav=styled.div`
-  position:fixed;
-  top:0;
-  bottom:0;
-  right:0;
-  background:white;
-  width:300px;
-  z-index:16;
-  list-style:none;
-  padding:20px;
-  display:flex;
-  flex-direction:column;
-  text-align:start;
-  cursor:pointer;
-  transform: ${props=>props.show?'translateX(0)':'translateX(100%)'};
-  
-  transition:transform 0,2s ease-in;
-  li{
-    padding:15px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.2);
-  }
-
-  a{
-    font-weight:600;
-  }
-
-`
-const CloseWrapper=styled.div`
-display:flex;
-justify-content:flex-end;
-font-size:1.5rem;
-cursor:pointer;
-`
